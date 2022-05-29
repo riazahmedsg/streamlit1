@@ -1,0 +1,41 @@
+import streamlit as st
+import pandas as pd
+
+@st.cache
+def load_data():
+    df = pd.read_csv("penguins.csv")
+    return df
+
+def show_explore_page():
+    df = load_data()
+    df = df.rename(columns={'island': 'Island','bill_length_mm': 'Bill Length', 'bill_depth_mm': 'Bill Depth','flipper_length_mm': 'Flipper Length','body_mass_g': 'Body Mass','year':'Year'})
+    df = df.dropna()
+    st.title('Data Exploration')
+    data = "penguins.csv"
+    st.write(' ### Dataset Name:', data)
+    st.write('Shape of dataset:', df.shape)
+    c = df['species'].nunique()
+    st.write('number of classes:', c)
+    s = df['species'].unique()
+    st.write(
+        """
+     Name of Classes : 
+    """
+    )
+    st.write(f"{s} ")
+
+    des = df.describe()
+    st.write(' ### Description of data:', des)
+
+    rows = df.head()
+    st.write(' ### First five rows of data:')
+    st.write(rows)
+
+    rows = df.tail()
+    st.write(' ### Last five rows of data:')
+    st.write(rows)
+
+
+
+
+
